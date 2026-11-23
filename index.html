@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#2563EB" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Family Hub" />
+  <title>Family Hub</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #F1F5F9;
+    }
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <iframe id="appFrame" title="Family Hub" allow="clipboard-write"></iframe>
+  <script>
+    (function () {
+      var baseUrl = 'https://script.google.com/macros/s/AKfycbym9F_yFHTl4VtlMfWEvvnI1DdM10k_nDbJfRjJ4zT67j0i8VyIB4XGAYaT3yo7KXhH/exec';
+      var params = new URLSearchParams(window.location.search);
+      var member = params.get('member');
+      var view = params.get('view');
+
+      if (member) {
+        try { localStorage.setItem('familyHub_member', member); } catch (e) {}
+      } else {
+        try { member = localStorage.getItem('familyHub_member'); } catch (e) {}
+      }
+
+      var targetParams = new URLSearchParams();
+      if (member) targetParams.set('member', member);
+      if (view) targetParams.set('view', view);
+
+      var query = targetParams.toString();
+      document.getElementById('appFrame').src = query ? (baseUrl + '?' + query) : baseUrl;
+    })();
+  </script>
+</body>
+</html>
